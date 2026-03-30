@@ -1,5 +1,6 @@
-// Load your images on page-load
+// preload the images so they dont flash when switching tabs
 function preloader() {
+
     const imagesList = [
         "./img/img-1.jpg",
         "./img/img-2.jpg",
@@ -21,10 +22,8 @@ ${images[2].src}`);
 
 window.addEventListener("load", preloader);
 
-// Get all buttons in a NODE LIST of buttons
 const buttons = document.querySelectorAll(".button-group button");
 
-// Complete your resource-object
 const resources = {
     solar: {
         headingContent: "Solar Savings",
@@ -46,27 +45,23 @@ const resources = {
     }
 };
 
-// Get the reference to your HTML-container
 const contentContainer = document.getElementById("content-container");
 
-// Start your handleSelection function here
 function handleSelection(event) {
 
-    // Remove the id active-button from the element that contains it
+    // loop through and remove active id from all buttons first
     for (let i = 0; i < buttons.length; i++) {
         if (buttons[i].hasAttribute("id")) {
             buttons[i].removeAttribute("id");
         }
     }
 
-    // Set the id active-button to the currently clicked button
     event.target.setAttribute("id", "active-button");
 
-    // Get selected content
     const selectedButton = event.target.dataset.content;
     const selectedContent = resources[selectedButton];
 
-    // Load content into HTML-container
+    // update the content area
     contentContainer.innerHTML = `
         <h1>${selectedContent.headingContent}</h1>
         <img src="${selectedContent.imgUrl}" alt="${selectedContent.imgAlt}">
@@ -74,7 +69,6 @@ function handleSelection(event) {
     `;
 }
 
-// Register all buttons to click event
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", handleSelection);
 }
